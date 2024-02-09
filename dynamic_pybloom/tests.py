@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from dynamic_pybloom.pybloom import BloomFilter, ScalableBloomFilter, DynamicBloomFilter
 from dynamic_pybloom.utils import running_python_3, range_fn
+import secrets
 
 try:
     from StringIO import StringIO
@@ -10,7 +11,6 @@ except ImportError:
 import os
 import doctest
 import unittest
-import random
 import tempfile
 from unittest import TestSuite
 
@@ -124,7 +124,7 @@ class TestUnionIntersection(unittest.TestCase):
 
 class Serialization(unittest.TestCase):
     SIZE = 12345
-    EXPECTED = set([random.randint(0, 10000100) for _ in range_fn(SIZE)])
+    EXPECTED = set([secrets.SystemRandom().randint(0, 10000100) for _ in range_fn(SIZE)])
 
     def test_serialization(self):
         for klass, args in [(BloomFilter, (self.SIZE,)),
@@ -156,7 +156,7 @@ class Serialization(unittest.TestCase):
 
 class Stringification(unittest.TestCase):
     SIZE = 12345
-    EXPECTED = set([random.randint(0, 10000100) for _ in range_fn(SIZE)])
+    EXPECTED = set([secrets.SystemRandom().randint(0, 10000100) for _ in range_fn(SIZE)])
 
     def test_string(self):
         for klass, args in [(BloomFilter, (self.SIZE,)),
